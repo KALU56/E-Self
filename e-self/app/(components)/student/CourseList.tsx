@@ -10,12 +10,12 @@ export default function CourseCard({ course }: CourseCardProps) {
   return (
     <Link
       href={`/courses/${course.slug}`}
-      className="bg-white rounded-lg shadow-md overflow-hidden" // Added overflow hidden
+      className="bg-white rounded-lg shadow-md overflow-hidden" 
     >
       <img
         src={course.image}
         alt={course.title}
-        className="w-full h-40 object-cover" // Fixed image height
+        className="w-full h-40 object-cover"
       />
       <div className="p-4">
         <h3 className="text-lg font-semibold mb-2">{course.title}</h3>
