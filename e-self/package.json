@@ -14,6 +14,10 @@
     "react-dom": "$react"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@heroicons/react": "^2.2.0",
+    "@mui/material": "^7.0.1",
     "framer-motion": "^12.5.0",
     "lucide-react": "^0.479.0",
     "next": "^15.2.4",

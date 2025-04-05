@@ -7,6 +7,17 @@ export default function Page() {
   const router = useRouter();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
+  const stats = [
+    {
+      icon: FaBook,
+      title: "Total Courses",
+      value: "12",
+      onClick: () => router.push("/dashboard/total-courses"), // Add onClick handler
+    },
+    { icon: FaUserGraduate, title: "Total Students", value: "1,245" },
+    { icon: FaMoneyBillWave, title: "Total Earnings", value: "$5,320" },
+  ];
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Top Section */}
@@ -17,7 +28,7 @@ export default function Page() {
           </p>
           <p className="text-sm text-gray-600">Today's Report</p>
         </div>
-        
+
         {/* Profile Dropdown */}
         <div className="relative">
           <FaUserCircle
@@ -67,12 +78,12 @@ export default function Page() {
 
       {/* Stats Section */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
-        {[
-          { icon: FaBook, title: "Total Courses", value: "12" },
-          { icon: FaUserGraduate, title: "Total Students", value: "1,245" },
-          { icon: FaMoneyBillWave, title: "Total Earnings", value: "$5,320" }
-        ].map((stat, index) => (
-          <div key={index} className="bg-white p-6 rounded-lg shadow-lg flex items-center">
+        {stats.map((stat, index) => (
+          <div
+            key={index}
+            className="bg-white p-6 rounded-lg shadow-lg flex items-center cursor-pointer" // Make it clickable
+            onClick={stat.onClick} // Call onClick if it exists
+          >
             <stat.icon className="text-4xl text-red-600" />
             <div className="ml-4">
               <p className="text-lg font-semibold">{stat.title}</p>
@@ -86,12 +97,19 @@ export default function Page() {
       <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Recent Courses</h2>
         <ul className="space-y-4">
-          {["Advanced JavaScript", "React for Beginners", "Node.js Masterclass"].map((course, index) => (
-            <li key={index} className="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center">
-              <span className="font-medium text-gray-700">{course}</span>
-              <span className="text-gray-600">{Math.floor(Math.random() * 200) + 50} Students</span>
-            </li>
-          ))}
+          {["Advanced JavaScript", "React for Beginners", "Node.js Masterclass"].map(
+            (course, index) => (
+              <li
+                key={index}
+                className="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center"
+              >
+                <span className="font-medium text-gray-700">{course}</span>
+                <span className="text-gray-600">
+                  {Math.floor(Math.random() * 200) + 50} Students
+                </span>
+              </li>
+            )
+          )}
         </ul>
       </div>
 

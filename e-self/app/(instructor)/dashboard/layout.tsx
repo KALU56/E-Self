@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <LandingHeader />
 
       {/* Sidebar + Content */}
-      <div className="flex">
+      <div className="flex-1">
         {/* Sidebar */}
         <aside
           className={`bg-white h-screen fixed top-16 left-0 z-40 shadow-md transition-all duration-300 
