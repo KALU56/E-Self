@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
@@ -16,32 +16,36 @@ export class AuthService {
   ) {}
 
   async register(dto: RegisterDto) {
-    const hashedPassword = await bcrypt.hash(dto.password, 10);
-    const verificationToken = this.jwtService.sign({ email: dto.email }, { expiresIn: '1d' });
+    try {
+      const hashedPassword = await bcrypt.hash(dto.password, 10);
+      const verificationToken = this.jwtService.sign({ email: dto.email }, { expiresIn: '1d' });
 
-    const user = await this.prisma.user.create({
-      data: {
-        email: dto.email,
-        password: hashedPassword,
-        role: dto.role,
-        name: dto.name,
-        phone: dto.phone,
-        verificationToken,
-      },
-    });
+      const user = await this.prisma.user.create({
+        data: {
+          email: dto.email,
+          password: hashedPassword,
+          role: dto.role,
+          name: dto.name,
+          phone: dto.phone,
+          verificationToken,
+        },
+      });
 
-    const emailResult = await this.emailService.sendVerificationEmail(dto.email, verificationToken, 'en');
-    if (!emailResult.success) {
-      return {
-        message: 'User registered successfully. Email sending failed - use this token to verify manually.',
-        verificationToken,
-      };
-    }
+      const emailResult = await this.emailService.sendVerificationEmail(dto.email, verificationToken, 'en');
+      if (!emailResult.success) {
+        return {
+          message: 'User registered successfully. Email sending failed - use this token to verify manually.',
+          verificationToken,
+        };
+      }
 
-    return { message: 'User registered successfully. Please verify your email.'};
-  } catch(error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-      throw new BadRequestException('Email or phone already exists');
+      return { message: 'User registered successfully. Please verify your email.' };
+    } catch (error) {
+      // Temporary workaround: Check error code without specific type
+      if (error.code === 'P2002') {
+        throw new ConflictException('Email or phone already exists');
+      }
+      throw error;
     }
   }
 

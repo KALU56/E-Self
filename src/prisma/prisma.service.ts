@@ -5,6 +5,7 @@ import { PrismaClient } from '@prisma/client'
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy{
     private readonly logger = new Logger(PrismaService.name);
+    contents: any;
 
     constructor(configService: ConfigService) {
         // Pass prisma client options  including the database URL from enviroment variables to the PrismaClient constructor
