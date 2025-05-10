@@ -1,10 +1,10 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { Request } from "express";
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
 
-declare module "express" {
+declare module 'express' {
   export interface Request {
-    user?: any; // Add the user property to the Request interface
+    user?: any;
   }
 }
 
@@ -23,13 +23,12 @@ export class JwtAuthGuard implements CanActivate {
     const token = authHeader.split(' ')[1];
 
     try {
-      const payload = await this.jwtService.verifyAsync(token); // ✅ use verifyAsync for async handling
-      console.log('Token payload:', payload); // optional debug
-
-      request.user = payload; // ✅ attach decoded payload to request.user
+      const payload = await this.jwtService.verifyAsync(token);
+      console.log('Token payload:', payload);
+      request.user = payload;
       return true;
     } catch (error) {
-      console.error('JWT verification error:', error); // optional debug
+      console.error('JWT verification error:', error);
       throw new UnauthorizedException('Invalid or expired token');
     }
   }

@@ -5,7 +5,6 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { EmailService } from './email.service';
-import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -64,7 +63,7 @@ export class AuthService {
     }
 
     const payload = { email: user.email, sub: user.id, role: user.role };
-    const accessToken = this.jwtService.sign(payload, { expiresIn: '1h' });
+    const accessToken = this.jwtService.sign(payload, { expiresIn: '1d' });
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
     await this.prisma.user.update({
@@ -119,6 +118,6 @@ export class AuthService {
 
   private generateToken(user: any) {
     const payload = { email: user.email, sub: user.id, role: user.role };
-    return { access_token: this.jwtService.sign(payload, { expiresIn: '1h' }) };
+    return { access_token: this.jwtService.sign(payload, { expiresIn: '1d' }) };
   }
 }

@@ -3,6 +3,11 @@ import { IsNumber, IsOptional, IsPositive, IsString } from "class-validator";
 
 
 export class SearchCoursesDto {
+
+    @IsString()
+    @IsOptional()
+    query?: string;
+    
     @IsString()
     @IsOptional()
     search?: string;

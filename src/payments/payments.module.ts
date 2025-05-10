@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 @Module({
   imports: [
     PrismaModule,
-    ChapaModule, // <-- Import the module (not the service directly)
+    ChapaModule, //Import the module (not the service directly)
   ],
   controllers: [PaymentController],
   providers: [PaymentService,JwtService],

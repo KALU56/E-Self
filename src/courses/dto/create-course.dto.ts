@@ -1,6 +1,7 @@
 import { IsString, IsNumber, IsPositive, IsOptional } from 'class-validator';
 
 export class CreateNewCourseDto {
+  
   @IsString()
   title: string;
 
@@ -25,5 +26,12 @@ export class CreateNewCourseDto {
   @IsString()
   @IsOptional()
   level?: string;
+
+  @IsNumber()
+  instructorId: number;
+
+  @IsString()
+  @IsOptional()
+  imageUrl?: string;
 }
 
