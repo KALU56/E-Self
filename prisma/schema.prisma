@@ -47,6 +47,8 @@ model User {
   isVerified        Boolean          @default(false)
   verificationToken String?          @unique
   refreshToken      String?
+  loginAttempts     Int             @default(0)
+  lockoutUntil      DateTime?
   createdAt         DateTime         @default(now())
   updatedAt         DateTime         @updatedAt
   courses           Course[]         @relation("InstructorCourses")

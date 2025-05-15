@@ -1,4 +1,4 @@
-import {IsEmail, MinLength,IsNotEmpty,IsEnum, IsOptional, Matches} from 'class-validator';
+import {IsEmail, MinLength,IsNotEmpty,IsEnum, IsOptional, Matches, IsString} from 'class-validator';
 export enum Role {
     STUDENT = 'STUDENT',
     INSTRUCTOR = 'INSTRUCTOR',
@@ -23,6 +23,9 @@ export class RegisterDto {
     @IsOptional()
     @Matches(/^\+251[79]\d{8}$/, {message:  'Phone must be a valid Ethiopian number (e.g +251941416514)'})
     phone?: string;
-
+   @IsOptional()
+   @IsString()
+   @Matches(/^(en|am)$/, { message: 'Language must be either "en" or "am"' })
+    language?: string;
     
 }

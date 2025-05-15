@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import * as path from 'path';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { CoursesModule } from './courses/course.module';
@@ -11,13 +12,14 @@ import { ContentModule } from './content/content.module';
 import { ChapaModule } from './chapa/chapa.module';
 import { MessageModule } from './Message/message.module';
 import { CertificatesModule } from './certificate/certificates.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       // load: [chapaConfig],
-      envFilePath: '.env', 
+      envFilePath: path.join(__dirname, '.env'),
       validationSchema: Joi.object({
         DATABASE_URL: Joi.string().uri().required(),
         JWT_SECRET: Joi.string().required().min(10),
@@ -46,5 +48,6 @@ import { CertificatesModule } from './certificate/certificates.module';
     ChapaModule,
     EnrollmentModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
